@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636305410157",
+    "project_id": "bedu-5b491",
+    "storage_bucket": "bedu-5b491.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636305410157:android:47a99d8f03964e99455764",
+        "android_client_info": {
+          "package_name": "com.bedu.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636305410157-ds51vlvmpban3jmqsguf4i41idvh5984.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_gWTzmEs5gB-eiOmpC2ZTjFmTiXoMWlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636305410157-ds51vlvmpban3jmqsguf4i41idvh5984.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

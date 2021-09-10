@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnError"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:text="Error"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <Button
+            android:id="@+id/btnSuccess"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Success"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnError"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnInfo"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Info"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSuccess"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnInfoFormatted"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Info formatted"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnInfo"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnWarning"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Warning"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnInfoFormatted"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnNormal"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Normal"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnWarning"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnNormalWithIcon"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Normal with icon"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNormal"
+            app:layout_constraintVertical_bias="0.06" />
+
+        <Button
+            android:id="@+id/btnCustom"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:text="Custom"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNormalWithIcon"
+            app:layout_constraintVertical_bias="0.06" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

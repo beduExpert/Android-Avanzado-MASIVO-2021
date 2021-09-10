@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="@dimen/button_small_border_width"
+        android:color="@color/button_border_default" />
+    <solid android:color="@color/transparent" />
+    <size android:height="@dimen/button_small_height" />
+    <corners android:radius="@dimen/button_small_corner_radius" />
+    <padding
+        android:bottom="0px"
+        android:left="@dimen/button_small_padding"
+        android:right="@dimen/button_small_padding"
+        android:top="0px" />
+</shape>

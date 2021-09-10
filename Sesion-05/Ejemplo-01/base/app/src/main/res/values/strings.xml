@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Terceros</string>
+    <string name="warning_need_token">You need to request an access token first</string>
+    <string name="code">Code: %1$s</string>
+    <string name="token">Access Token: %1$s</string>
+    <string name="btn_get_profile">Get User Profile</string>
+    <string name="btn_req_code">Request Code</string>
+    <string name="btn_req_token">Request Token</string>
+    <string name="btn_clear_credentials">Clear WebView Credentials</string>
+
+    <!--  FACEBOOK  -->
+
+    <string name="err_spotify_disconnected">"Spotify is not Connected. Use one of the 'connect' buttons"</string>
+    <string name="err_generic_toast">An error has occurred. Check the logs to know more.</string>
+
+    <!--  SPOTIFY  -->
+    <string name="connect">Connect</string>
+    <string name="authorize">Connect and Authorize</string>
+    <string name="connecting">Connecting</string>
+    <string name="connected">Connected</string>
+    <string name="disconnect">Disconnect</string>
+
+    <string name="on_demand_feedback">Can play on demand? %1$b</string>
+    <string name="is_in_collection_feedback">Is in the user collection? %1$s</string>
+    <string name="command_feedback">"'%1$s' command successful!"</string>
+    <string name="command_response">"'%1$s' command response"</string>
+    <string name="connect_switch_to_local">Switch to Local Playback</string>
+    <string name="play_podcast_button_label">Play podcast</string>
+    <string name="play_album_button_label">Play album</string>
+    <string name="play_artist_button_label">Play artist</string>
+    <string name="play_playlist_button_label">Play playlist</string>
+    <string name="play_track_button_label">Play track</string>
+    <string name="get_collection_state">Get Collection state</string>
+    <string name="save_uri">Save to Collection</string>
+    <string name="remove_uri">Remove from Collection</string>
+    <string name="browse_content">Browse Content</string>
+    <string name="subscribe_to_capabilities">Get Capabilities</string>
+    <string name="subscribe_to_current_track">Subscribe to playerstate</string>
+    <string name="subscribe_to_player_context">Subscribe to playercontext</string>
+    <string name="title_player_context">Player Context</string>
+    <string name="title_current_track">Current Track</string>
+    <string name="title_image_size">Image size</string>
+    <string name="title_image_scale_type">Scale type</string>
+
+    <!--  CONEKTA  -->
+    <string name="XXXX">XXXX-XXXX-XXXX-XXXX</string>
+    <string name="cardNumber">Card number:</string>
+    <string name="cardName">Name that appears on the card:</string>
+    <string name="expire">Expiration:</string>
+    <string name="cardCvc">Security code:</string>
+    <string name="mm">MM</string>
+    <string name="yyyy">AAAA</string>
+    <string name="name">Name</string>
+    <string name="cvc">CVC</string>
+    <string name="outputData">Output data:</string>
+    <string name="outputTokenData">Token output</string>
+    <string name="outputUUIDData">UUID output</string>
+    <string name="needInternetConnection">You need internet connection</string>
+    <string name="cardDataIncomplete">Incomplete card data!</string>
+    <string name="theTokenIdLabel">Token:</string>
+    <string name="errorLabel">Error:</string>
+    <string name="uuidDeviceLabel">UUID:</string>
+
+</resources>
