@@ -77,6 +77,6 @@ DeepLinkFragment -> dentro del evento del botón
 
 </br>
 
-[Regresar ](../)(Sesion 4)
+[Regresar ](../)(Sesion 04)
 
 [Siguiente ](../../Sesion-05/README.md)(Sesión 05)
