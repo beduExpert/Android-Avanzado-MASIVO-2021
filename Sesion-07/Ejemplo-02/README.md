@@ -518,4 +518,4 @@ Ahora se visualizarán las gráficas de la siguiente forma.
 
 </br>
 
-[Siguiente ](../Reto-02/README.md)(Reto 2)
+[Siguiente ](../Ejemplo-03/README.md)(Ejemplo 3)
