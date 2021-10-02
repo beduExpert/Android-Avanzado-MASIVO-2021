@@ -1,4 +1,4 @@
-# Reto 03: Agregando más atajos
+# Reto 02: Agregando más atajos
 
 ## Objetivo
 

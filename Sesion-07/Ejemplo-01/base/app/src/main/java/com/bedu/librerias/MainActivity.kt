@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ChartActivity::class.java)
             startActivity(intent)
         }
-        binding.btnStackedBar.setOnClickListener {
-            val intent = Intent(this, StackedBarActivity::class.java)
-            startActivity(intent)
-        }
         binding.btnShortbread.setOnClickListener {
             val intent = Intent(this, ShortbreadActivity::class.java)
             startActivity(intent)

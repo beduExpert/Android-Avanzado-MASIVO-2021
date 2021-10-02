@@ -27,5 +27,5 @@ En esta sesión implementaremos en un nuevo proyecto algunas de las mejores libr
     - [Reto 01: Personalizando mensajes](./Reto-01/README.md)
 - [Ejemplo 02: Agregando Gráficas by MpAndroidChart](./Ejemplo-02/README.md)
 - [Ejemplo 03: Mostrando atajos desde el launcher](./Ejemplo-03/README.md)
-    - [Reto  03: Agregando más atajos](./Reto-02/README.md)
+    - [Reto  02: Agregando más atajos](./Reto-02/README.md)
 - [Postwork: Implementando Fresco](./Postwork/README.md)

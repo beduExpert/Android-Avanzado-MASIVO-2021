@@ -54,4 +54,4 @@ Realizamos lo siguiente para agregar estos atajos:
 
 </br>
 
-[Siguiente ](../Reto-03/README.md)(Reto 3)
+[Siguiente ](../Reto-02/README.md)(Reto 2)

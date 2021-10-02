@@ -25,9 +25,6 @@
             android:name=".ChartActivity"
             android:label="CHART" />
         <activity
-            android:name=".StackedBarActivity"
-            android:label="STACKED BAR" />
-        <activity
             android:name=".ShortbreadActivity"
             android:label="SHORT BREAD" />
         <activity
