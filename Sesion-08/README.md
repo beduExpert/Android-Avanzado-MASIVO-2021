@@ -29,6 +29,4 @@ En esta sesión se sumarán en un nuevo proyecto algunas de las implementaciones
     - [Reto 01: Agregando nuevo rostro](./Reto-01/README.md)
 - [Ejemplo 02: Visualizando modelos 3D en el proyecto](./Ejemplo-02/README.md)
     - [Reto  02: Probando modelos 3D](./Reto-02/README.md)
-- [Ejemplo 03: Mostrando rostros tipo Snapchat](./Ejemplo-03/README.md)
-    - [Reto  03: Personalizando opciones](./Reto-02/README.md)
 - [Postwork: Utilizando Scene Viewer](./Postwork/README.md)

@@ -24,10 +24,6 @@ class MainActivity : AppCompatActivity() {
 //            val intent = Intent(this, Activity::class.java)
 //            startActivity(intent)
         }
-        binding.btnSnap.setOnClickListener {
-//            val intent = Intent(this, Activity::class.java)
-//            startActivity(intent)
-        }
         binding.btnIntents.setOnClickListener {
             val intent = Intent(this, IntentActivity::class.java)
             startActivity(intent)
