@@ -38,12 +38,6 @@ El proyecto base de esta sesión ya tiene implementadas las dependencias, pero s
 
     <img src="assets/03.png" width="100%"/>
 
-    Este recurso define todas las rutas posibles que nuestro usuario puede tomar dentro de nuestra app. 
-
-    > Nota: Las flechas entre los destinos se denominan Acciones, y las vistas previas Destinos.
-
-    <img src="assets/03.png" width="100%"/>
-
 3. Por último nos dirigimos al gradle.properties  y agregamos la siguiente línea, siempre y cuando no se encuentre ya activada.
 
     ```gradle
