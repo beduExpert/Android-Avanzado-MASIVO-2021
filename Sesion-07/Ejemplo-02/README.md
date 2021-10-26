@@ -6,7 +6,7 @@
 
 ## Desarrollo
 
-En este ejemplo descargaremos e instalaremos la librería MpAndroidChart. Como se mencionó en el prework, hay librerías que no están escritas en kotlin, algunas de ellas podríamos pasarlas a Kotlin con ayuda de Android Studio, pero existen otras que implican varios cambios, por lo que lo más recomendable sería utilizarlas con JAVA, y MpAndroidChart es una de ellas. Por lo anterior aprovecharemos para utilizar la interoperabilidad soportada por Kotlin y Android Studio.
+En este ejemplo descargaremos e instalaremos la librería MpAndroidChart.
 
 Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previamente:
 
@@ -26,21 +26,16 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
 4. La primera clase es abstracta y tiene por nombre **ChartItem**, y tiene la tarea de agregar los métodos que implementarán los items, así como el tipo que tendrán. Para ello agregamos el siguiente código.
 
     ```kotlin
-    public abstract class ChartItem {
+    abstract class ChartItem internal constructor(var mChartData: ChartData<*>) {
+        abstract val itemType: Int
 
-        static final int TYPE_BARCHART = 0;
-        static final int TYPE_LINE_CHART = 1;
-        static final int TYPE_PIE_CHART = 2;
+        abstract fun getView(position: Int, convertView: View?, c: Context?): View?
 
-        ChartData<?> mChartData;
-
-        ChartItem(ChartData<?> cd) {
-            this.mChartData = cd;
+        companion object {
+            const val TYPE_BARCHART = 0
+            const val TYPE_LINE_CHART = 1
+            const val TYPE_PIE_CHART = 2
         }
-
-        public abstract int getItemType();
-
-        public abstract View getView(int position, View convertView, Context c);
     }
     ```
 
@@ -49,86 +44,63 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
     > Nota: fue agregada una condicional dentro del constructor para obtener el color, según el tema del dispositivo “**Dark / Day**”.
 
     ```kotlin
-    public class BarChartItem extends ChartItem {
+    abstract class BarChartItem(cd: ChartData<*>?, c: Context) : ChartItem(cd!!) {
 
-        private final Typeface mTf;
-        private final int resTextColor;
-
-        public BarChartItem(ChartData<?> cd, Context c) {
-            super(cd);
-
-            mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
-
-            resTextColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
-                    c.getResources().getColor(R.color.text_color, c.getTheme())
-                    : c.getResources().getColor(R.color.text_color);
-        }
-
-        @Override
-        public int getItemType() {
-            return TYPE_BARCHART;
-        }
+        private val mTf: Typeface = Typeface.createFromAsset(c.assets, "OpenSans-Regular.ttf")
+        private val resTextColor: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) c.resources
+            .getColor(R.color.text_color, c.theme) else c.resources.getColor(R.color.text_color)
 
         @SuppressLint("InflateParams")
-        @Override
-        public View getView(int position, View convertView, Context c) {
-
-            ViewHolder holder;
+        override fun getView(position: Int, convertView: View?, c: Context?): View? {
+            var convertView: View? = convertView
+            val holder: ViewHolder
 
             if (convertView == null) {
-
-                holder = new ViewHolder();
-
-                convertView = LayoutInflater.from(c).inflate(
-                        R.layout.list_item_barchart, null);
-                holder.chart = convertView.findViewById(R.id.chart);
-
-                convertView.setTag(holder);
-
+                holder = ViewHolder()
+                convertView = LayoutInflater.from(c).inflate(R.layout.list_item_barchart, null)
+                holder.chart = convertView.findViewById(R.id.chart)
+                convertView.tag = holder
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                holder = convertView.tag as ViewHolder
             }
 
-            holder.chart.getDescription().setEnabled(false);
-            holder.chart.setDrawGridBackground(false);
-            holder.chart.setDrawBarShadow(false);
+            holder.chart!!.description.isEnabled = false
+            holder.chart!!.setDrawGridBackground(false)
+            holder.chart!!.setDrawBarShadow(false)
 
-            XAxis xAxis = holder.chart.getXAxis();
-            xAxis.setPosition(XAxisPosition.BOTTOM);
-            xAxis.setTypeface(mTf);
-            xAxis.setTextColor(resTextColor);
-            xAxis.setDrawGridLines(false);
-            xAxis.setDrawAxisLine(true);
+            val xAxis = holder.chart!!.xAxis
+            xAxis.position = XAxisPosition.BOTTOM
+            xAxis.typeface = mTf
+            xAxis.textColor = resTextColor
+            xAxis.setDrawGridLines(false)
+            xAxis.setDrawAxisLine(true)
 
-            YAxis leftAxis = holder.chart.getAxisLeft();
-            leftAxis.setTypeface(mTf);
-            leftAxis.setLabelCount(5, false);
-            leftAxis.setTextColor(resTextColor);
-            leftAxis.setSpaceTop(20f);
-            leftAxis.setAxisMinimum(0f);
+            val leftAxis = holder.chart!!.axisLeft
+            leftAxis.typeface = mTf
+            leftAxis.setLabelCount(5, false)
+            leftAxis.textColor = resTextColor
+            leftAxis.spaceTop = 20f
+            leftAxis.axisMinimum = 0f
 
-            YAxis rightAxis = holder.chart.getAxisRight();
-            rightAxis.setTypeface(mTf);
-            rightAxis.setTextColor(resTextColor);
-            rightAxis.setLabelCount(5, false);
-            rightAxis.setSpaceTop(20f);
-            rightAxis.setAxisMinimum(0f);
+            val rightAxis = holder.chart!!.axisRight
+            rightAxis.typeface = mTf
+            rightAxis.textColor = resTextColor
+            rightAxis.setLabelCount(5, false)
+            rightAxis.spaceTop = 20f
+            rightAxis.axisMinimum = 0f
+            mChartData.setValueTypeface(mTf)
 
-            mChartData.setValueTypeface(mTf);
+            val l = holder.chart!!.legend
+            l.textColor = resTextColor
+            holder.chart!!.data = mChartData as BarData
+            holder.chart!!.setFitBars(true)
+            holder.chart!!.animateY(700)
 
-            Legend l = holder.chart.getLegend();
-            l.setTextColor(resTextColor);
-
-            holder.chart.setData((BarData) mChartData);
-            holder.chart.setFitBars(true);
-
-            holder.chart.animateY(700);
-
-            return convertView;
+            return convertView
         }
 
-        private static class ViewHolder {
-            BarChart chart;
+        private class ViewHolder {
+            var chart: BarChart? = null
         }
     }
     ```
@@ -136,81 +108,61 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
 6. La tercera clase tiene el nombre de **LineChartItem**, y esta se encarga de mostrar los datos de la gráfica de líneas. Agregamos el siguiente código para establecerla.
 
     ```kotlin
-    public class LineChartItem extends ChartItem {
+    abstract class LineChartItem(cd: ChartData<*>?, c: Context) : ChartItem(cd!!) {
 
-        private final Typeface mTf;
-        private final int resTextColor;
-
-        public LineChartItem(ChartData<?> cd, Context c) {
-            super(cd);
-
-            mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
-
-            resTextColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
-                    c.getResources().getColor(R.color.text_color, c.getTheme())
-                    : c.getResources().getColor(R.color.text_color);
-        }
-
-        @Override
-        public int getItemType() {
-            return TYPE_LINE_CHART;
-        }
+        private val mTf: Typeface = Typeface.createFromAsset(c.assets, "OpenSans-Regular.ttf")
+        private val resTextColor: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) c.resources
+            .getColor(R.color.text_color, c.theme) else c.resources.getColor(R.color.text_color)
 
         @SuppressLint("InflateParams")
-        @Override
-        public View getView(int position, View convertView, Context c) {
-
-            ViewHolder holder;
+        override fun getView(position: Int, convertView: View?, c: Context?): View? {
+            var convertView: View? = convertView
+            val holder: ViewHolder
 
             if (convertView == null) {
-
-                holder = new ViewHolder();
-
+                holder = ViewHolder()
                 convertView = LayoutInflater.from(c).inflate(
-                        R.layout.list_item_linechart, null);
-                holder.chart = convertView.findViewById(R.id.chart);
-
-                convertView.setTag(holder);
-
+                    R.layout.list_item_linechart, null
+                )
+                holder.chart = convertView.findViewById(R.id.chart)
+                convertView.tag = holder
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                holder = convertView.tag as ViewHolder
             }
 
-            holder.chart.getDescription().setEnabled(false);
-            holder.chart.setDrawGridBackground(false);
+            holder.chart!!.description.isEnabled = false
+            holder.chart!!.setDrawGridBackground(false)
 
-            XAxis xAxis = holder.chart.getXAxis();
-            xAxis.setPosition(XAxisPosition.BOTTOM);
-            xAxis.setTypeface(mTf);
-            xAxis.setTextColor(resTextColor);
-            xAxis.setDrawGridLines(false);
-            xAxis.setDrawAxisLine(true);
+            val xAxis = holder.chart!!.xAxis
+            xAxis.position = XAxisPosition.BOTTOM
+            xAxis.typeface = mTf
+            xAxis.textColor = resTextColor
+            xAxis.setDrawGridLines(false)
+            xAxis.setDrawAxisLine(true)
 
-            YAxis leftAxis = holder.chart.getAxisLeft();
-            leftAxis.setTypeface(mTf);
-            leftAxis.setTextColor(resTextColor);
-            leftAxis.setLabelCount(5, false);
-            leftAxis.setAxisMinimum(0f);
+            val leftAxis = holder.chart!!.axisLeft
+            leftAxis.typeface = mTf
+            leftAxis.textColor = resTextColor
+            leftAxis.setLabelCount(5, false)
+            leftAxis.axisMinimum = 0f
 
-            YAxis rightAxis = holder.chart.getAxisRight();
-            rightAxis.setTypeface(mTf);
-            rightAxis.setTextColor(resTextColor);
-            rightAxis.setLabelCount(5, false);
-            rightAxis.setDrawGridLines(false);
-            rightAxis.setAxisMinimum(0f);
+            val rightAxis = holder.chart!!.axisRight
+            rightAxis.typeface = mTf
+            rightAxis.textColor = resTextColor
+            rightAxis.setLabelCount(5, false)
+            rightAxis.setDrawGridLines(false)
+            rightAxis.axisMinimum = 0f
 
-            Legend l = holder.chart.getLegend();
-            l.setTextColor(resTextColor);
+            val l = holder.chart!!.legend
+            l.textColor = resTextColor
+            holder.chart!!.data = mChartData as LineData
+            holder.chart!!.animateX(750)
 
-            holder.chart.setData((LineData) mChartData);
-
-            holder.chart.animateX(750);
-
-            return convertView;
+            return convertView
         }
 
-        private static class ViewHolder {
-            LineChart chart;
+        private class ViewHolder {
+            var chart: LineChart? = null
         }
     }
     ```
@@ -218,92 +170,77 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
 7. Por último, la cuarta clase se añade con el nombre de **PieChartItem**, para mostrar los valores del pie, y se suma lo siguiente.
 
     ```kotlin
-    public class PieChartItem extends ChartItem {
+    abstract class PieChartItem(cd: ChartData<*>?, c: Context) : ChartItem(cd!!) {
 
-        private final Typeface mTf;
-        private final SpannableString mCenterText;
-        private final int resTextColor;
-
-        public PieChartItem(ChartData<?> cd, Context c) {
-            super(cd);
-
-            mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
-            mCenterText = generateCenterText();
-
-            resTextColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
-                    c.getResources().getColor(R.color.text_color, c.getTheme())
-                    : c.getResources().getColor(R.color.text_color);
-        }
-
-        @Override
-        public int getItemType() {
-            return TYPE_PIE_CHART;
-        }
+        private val mTf: Typeface = Typeface.createFromAsset(c.assets, "OpenSans-Regular.ttf")
+        private val mCenterText: SpannableString
+        private val resTextColor: Int
 
         @SuppressLint("InflateParams")
-        @Override
-        public View getView(int position, View convertView, Context c) {
-
-            ViewHolder holder;
-
+        override fun getView(position: Int, convertView: View?, c: Context?): View? {
+            var convertView: View? = convertView
+            val holder: ViewHolder
+            
             if (convertView == null) {
-
-                holder = new ViewHolder();
-
+                holder = ViewHolder()
                 convertView = LayoutInflater.from(c).inflate(
-                        R.layout.list_item_piechart, null);
-                holder.chart = convertView.findViewById(R.id.chart);
-
-                convertView.setTag(holder);
-
+                    R.layout.list_item_piechart, null
+                )
+                holder.chart = convertView.findViewById(R.id.chart)
+                convertView.tag = holder
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                holder = convertView.tag as ViewHolder
             }
-
-            holder.chart.getDescription().setEnabled(false);
-            holder.chart.setHoleRadius(52f);
-            holder.chart.setTransparentCircleRadius(57f);
-            holder.chart.setCenterText(mCenterText);
-            holder.chart.setHoleColor(resTextColor);
-            holder.chart.setCenterTextTypeface(mTf);
-            holder.chart.setCenterTextSize(9f);
-            holder.chart.setUsePercentValues(true);
-            holder.chart.setExtraOffsets(5, 10, 50, 10);
-
-            mChartData.setValueFormatter(new PercentFormatter());
-            mChartData.setValueTypeface(mTf);
-            mChartData.setValueTextSize(11f);
-            mChartData.setValueTextColor(resTextColor);
-
-            holder.chart.setData((PieData) mChartData);
-
-            Legend l = holder.chart.getLegend();
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-            l.setOrientation(Legend.LegendOrientation.VERTICAL);
-            l.setTextColor(resTextColor);
-            l.setDrawInside(false);
-            l.setYEntrySpace(0f);
-            l.setYOffset(0f);
-
-            holder.chart.animateY(900);
-
-            return convertView;
+            
+            holder.chart!!.description.isEnabled = false
+            holder.chart!!.holeRadius = 52f
+            holder.chart!!.transparentCircleRadius = 57f
+            holder.chart!!.centerText = mCenterText
+            holder.chart!!.setHoleColor(resTextColor)
+            holder.chart!!.setCenterTextTypeface(mTf)
+            holder.chart!!.setCenterTextSize(9f)
+            holder.chart!!.setUsePercentValues(true)
+            holder.chart!!.setExtraOffsets(5f, 10f, 50f, 10f)
+            
+            mChartData.setValueFormatter(PercentFormatter())
+            mChartData.setValueTypeface(mTf)
+            mChartData.setValueTextSize(11f)
+            mChartData.setValueTextColor(resTextColor)
+            
+            holder.chart!!.data = mChartData as PieData
+            
+            val l = holder.chart!!.legend
+            l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+            l.orientation = Legend.LegendOrientation.VERTICAL
+            l.textColor = resTextColor
+            l.setDrawInside(false)
+            l.yEntrySpace = 0f
+            l.yOffset = 0f
+            holder.chart!!.animateY(900)
+            
+            return convertView
         }
 
-        private SpannableString generateCenterText() {
-            SpannableString s = new SpannableString("MPAndroidChart\nBedu\nAdvanced");
-            s.setSpan(new RelativeSizeSpan(1.6f), 0, 14, 0);
-            s.setSpan(new ForegroundColorSpan(ColorTemplate.VORDIPLOM_COLORS[0]), 0, 14, 0);
-            s.setSpan(new RelativeSizeSpan(1.0f), 14, 20, 0);
-            s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, 20, 0);
-            s.setSpan(new RelativeSizeSpan(1.4f), 20, s.length(), 0);
-            s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 20, s.length(), 0);
-            return s;
+        private fun generateCenterText(): SpannableString {
+            val s = SpannableString("MPAndroidChart\nBedu\nAdvanced")
+            s.setSpan(RelativeSizeSpan(1.6f), 0, 14, 0)
+            s.setSpan(ForegroundColorSpan(ColorTemplate.VORDIPLOM_COLORS[0]), 0, 14, 0)
+            s.setSpan(RelativeSizeSpan(1.0f), 14, 20, 0)
+            s.setSpan(ForegroundColorSpan(Color.GRAY), 14, 20, 0)
+            s.setSpan(RelativeSizeSpan(1.4f), 20, s.length, 0)
+            s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), 20, s.length, 0)
+            return s
         }
 
-        private static class ViewHolder {
-            PieChart chart;
+        private class ViewHolder {
+            var chart: PieChart? = null
+        }
+
+        init {
+            mCenterText = generateCenterText()
+            resTextColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) c.resources
+                .getColor(R.color.text_color, c.theme) else c.resources.getColor(R.color.text_color)
         }
     }
     ```
@@ -372,21 +309,35 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
     private int resTextColor;
 
     ...
-
     resTextColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ?
-            getResources().getColor(R.color.text_color, getTheme())
-            : getResources().getColor(R.color.text_color);
+                getResources().getColor(R.color.text_color, getTheme())
+                : getResources().getColor(R.color.text_color);
 
     ListView listView = findViewById(R.id.listView);
     ArrayList<ChartItem> list = new ArrayList<>();
 
     for (int i = 0; i < 30; i++) {
         if (i % 3 == 0) {
-            list.add(new LineChartItem(generateDataLine(i + 1), getApplicationContext()));
+            list.add(new LineChartItem(generateDataLine(i + 1), getApplicationContext()) {
+                @Override
+                public int getItemType() {
+                    return ChartItem.TYPE_LINE_CHART;
+                }
+            });
         } else if (i % 3 == 1) {
-            list.add(new BarChartItem(generateDataBar(i + 1), getApplicationContext()));
+            list.add(new BarChartItem(generateDataBar(i + 1), getApplicationContext()) {
+                @Override
+                public int getItemType() {
+                    return ChartItem.TYPE_BARCHART;
+                }
+            });
         } else {
-            list.add(new PieChartItem(generateDataPie(), getApplicationContext()));
+            list.add(new PieChartItem(generateDataPie(), getApplicationContext()) {
+                @Override
+                public int getItemType() {
+                    return ChartItem.TYPE_PIE_CHART;
+                }
+            });
         }
     }
 
@@ -403,9 +354,8 @@ Para hacerlo realizamos los siguientes pasos en el proyecto utilizado previament
             super(context, 0, objects);
         }
 
-        @NonNull
         @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             return getItem(position).getView(position, convertView, getContext());
         }
 
