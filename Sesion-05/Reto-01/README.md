@@ -19,6 +19,12 @@ En el ejemplo 01 aprendimos a compartir vínculos con el SDK de Facebook. Para c
 
     - Utiliza la imagen que sea de tu agrado.
     - Para compartir imágenes utilizamos SharePhoto.
+    - Recuerda agregar lo siguiente dentro del manifest
+      ```xml
+      <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+      </queries>
+      ```
 
 </br>
 
